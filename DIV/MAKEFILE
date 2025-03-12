@@ -8,7 +8,6 @@
 #
 
 LIBDIR = ..\main
-#
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
@@ -16,25 +15,19 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 INSTALL_TARGS = div0.lib div0.h div0.inc
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
 # What libs to make
 LIBS = div0
 
-# What test programs to make
-TEST_PROGS = testd
-
 # What object files for the lib
 DIV0_OBJS =  div0.obj
 
-# What object files and libs for the test programs
-TESTD_SRCS = testd.c testda.asm
-TESTD_LIBS = div0.lib
-
 div0.lib: $(DIV0_OBJS)
-	wlib div0.lib $(DIV0_OBJS)
-	copy *.lib $(LIBDIR)
+	wlib /q div0.lib $(DIV0_OBJS)
+
 div0.obj: div0.asm
 	masm div0.asm
 
-testd.obj: 
+clean:
+	erase $(CLEAN_TARGS)

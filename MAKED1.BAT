@@ -1,51 +1,74 @@
 rem d1vars sets up compiler variables
 call d1vars.bat
-set LIBDIR = d:\dev\d1\main
-set CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
+set LIBDIR=c:\dev\d1\main
+rem no separate build dir for now...
+rem mkdir /p build
+set BUILD_DIR=c:\dev\d1\main
+set CCFLAGS=/dNETWORK /dRELEASE /dNDEBUG
 cd misc
-make
+dsmake
+copy misc.lib %BUILD_DIR%
 cd..
-cd includes
-make
-cd ..
+rem TODO: Double-check includes directory
+rem cd includes
+rem dsmake
+rem cd ..
 cd fix
-make
+dsmake
+copy fix.lib %BUILD_DIR%
 cd ..
 cd cfile
-make
+copy cfile.lib %BUILD_DIR%
+dsmake
 cd ..
 cd 2d
-make
+copy gr.lib %BUILD_DIR%
+dsmake
 cd ..
 cd bios
-make
+copy io.lib %BUILD_DIR%
+dsmake
 cd ..
 cd iff
-make
+copy iff.lib %BUILD_DIR%
+dsmake
 cd ..
 cd div
-make
+dsmake
+copy div0.lib %BUILD_DIR%
 cd ..
 cd mem
-make
+dsmake
+copy mem.lib %BUILD_DIR%
 cd ..
 cd vecmat
-make
+dsmake
+copy vecmat.lib %BUILD_DIR%
 cd ..
 cd 3d
-make
+dsmake
+copy 3d.lib %BUILD_DIR%
 cd ..
 cd texmap
-make
+dsmake
+copy texmap.lib %BUILD_DIR%
 cd ..
 cd ui
-make
+dsmake
+copy ui.lib %BUILD_DIR%
 cd ..
 cd main
-cd editor
-make
+rem no editor, for now...
+rem cd editor
+rem dsmake
+rem cd ..
+dsmake
+rem since we have main as build_dir now...
+rem copy main.lib %BUILD_DIR%
+rem copy inferno.obj %BUILD_DIR%
 cd ..
-make
-cd ..
+rem cd build
+rem dsmake
+rem cd ..
 Echo Make complete.
 

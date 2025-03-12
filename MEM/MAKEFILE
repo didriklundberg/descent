@@ -8,16 +8,14 @@
 #
 
 LIBDIR = ..\main
-#
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
 
 # What to install, and where to install it
 INSTALL_TARGS = mem.lib mem.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
 # What libs to make
 LIBS = mem
@@ -25,7 +23,10 @@ LIBS = mem
 MEM_OBJS = mem.obj
 
 mem.lib: $(MEM_OBJS)
-	wlib mem.lib $(MEM_OBJS)
-	copy *.lib $(LIBDIR)
+	wlib /q mem.lib $(MEM_OBJS)
+
 mem.obj: mem.h mem.c
 	wcc386 $(CCFLAGS) mem.c
+
+clean:
+	erase $(CLEAN_TARGS)

@@ -1,7 +1,9 @@
 @echo off
-set TOOLROOTDIR=d:\MSVC
-set PATH=d:\masm\bin;d:\watcom\binnt;d:\MSVC\BIN;%PATH%
-set INCLUDE=d:\watcom\h;d:\MSVC\INCLUDE;%INCLUDE%;d:\dev\d1\lib;d:\dev\d1\includes;
-set LIB=d:\MSVC\LIB;%LIB%
-set watcom=d:\watcom\
+set TOOLROOTDIR=c:\MSVC
+set PATH=c:\masm611\bin;c:\watcom\binnt;c:\MSVC\BIN;%PATH%
+set INCLUDE=c:\watcom\h;c:\MSVC\INCLUDE;%INCLUDE%;c:\dev\d1\lib;c:\dev\d1\includes;
+set LIB=c:\MSVC\LIB;%LIB%
+set watcom=c:\watcom\
+
+set LIBDIR=c:\dev\d1\main
 

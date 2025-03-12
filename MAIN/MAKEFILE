@@ -2,44 +2,46 @@
 # Makefile for DESCENT execuable
 #
 
-LIBDIR = c:\dev\d1src\main
-#
+#TODO: ???
+LIBDIR = c:\dev\d1\LIB
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
-#
+INSTALL_TARGS = main.lib
 
+CLEAN_TARGS = *.obj *.lib *.err
 
 DESCENT_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
         	 	cfile.lib \
         	 	mem.lib \
         	 	ui.lib \
-				div0.lib misc.lib texmap.lib editor.lib
+			div0.lib misc.lib texmap.lib
 
-#		sosdigi.lib #sosmidi.lib \
-		#iglasses.lib gclfr32.lib loadpats.lib
-		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
+# Apparently if we don't split this, it gets too much for Opus Make
 
-DESCENT_OBJS = inferno.obj game.obj gauges.obj mglobal.obj \
-			 scores.obj object.obj laser.obj physics.obj bm.obj \
- 			 menu.obj gamesave.obj switch.obj effects.obj texmerge.obj polyobj.obj \
-			 gamemine.obj fireball.obj ai.obj aipath.obj hostage.obj \
-			 powerup.obj fuelcen.obj digi.obj render.obj hash.obj piggy.obj args.obj \
-			 gameseg.obj wall.obj collide.obj lighting.obj \
-			 robot.obj morph.obj vclip.obj weapon.obj fvi.obj newdemo.obj titles.obj \
-			 vfx.obj gameseq.obj controls.obj automap.obj text.obj \
-			 network.obj newmenu.obj netmisc.obj victor.obj\
-			 gamefont.obj joydefs.obj hud.obj playsave.obj \
-			 endlevel.obj terrain.obj kconfig.obj modem.obj  \
-			 multi.obj cntrlcen.obj credits.obj config.obj soscodec.obj kmatrix.obj	\
-			 paging.obj mission.obj iglasses.obj songs.obj bmread.obj state.obj multibot.obj nocomlib.obj slew.obj dumpmine.obj 
-#demo.obj garage.obj radar.obj coindev.obj serial.obj vfxread.obj victor.obj
+DESCENT_OBJS1 = game.obj gauges.obj mglobal.obj \
+	scores.obj object.obj laser.obj physics.obj bm.obj \
+ 	menu.obj gamesave.obj switch.obj effects.obj texmerge.obj polyobj.obj \
+	gamemine.obj fireball.obj ai.obj aipath.obj hostage.obj \
+	powerup.obj fuelcen.obj digi.obj render.obj hash.obj piggy.obj args.obj \
+	gameseg.obj wall.obj collide.obj lighting.obj \
+	robot.obj morph.obj vclip.obj weapon.obj fvi.obj newdemo.obj titles.obj \
+	vfx.obj gameseq.obj controls.obj automap.obj text.obj \
+	network.obj newmenu.obj netmisc.obj victor.obj
 
+DESCENT_OBJS2 = gamefont.obj joydefs.obj hud.obj playsave.obj \
+	endlevel.obj terrain.obj kconfig.obj modem.obj \
+	multi.obj cntrlcen.obj credits.obj config.obj soscodec.obj kmatrix.obj	\
+	paging.obj mission.obj iglasses.obj songs.obj bmread.obj state.obj multibot.obj nocomlib.obj slew.obj dumpmine.obj
 
 # Files to link for Descent
+DESCENTR.exe: main.lib inferno.obj
+	wcl386 /zq /fe=descentr.exe /l=dos4g /k50000 inferno.obj main.lib $(DESCENT_LIBS)
 
-DESCENTR.EXE: 	$(DESCENT_OBJS)
-	wcl386 /fe=descentr.exe /l=dos4g /k50000 $(DESCENT_OBJS) $(DESCENT_LIBS)
+main.lib: $(DESCENT_OBJS1) $(DESCENT_OBJS2) inferno.obj
+	@echo $(DESCENT_OBJS1) > objs.rsp
+	@echo $(DESCENT_OBJS2) >> objs.rsp
+	wlib /q main.lib @objs.rsp
 
 ai.obj:	 ai.c ai.h
 	wcc386 $(CCFLAGS) ai.c
@@ -65,8 +67,10 @@ centers.obj: centers.c
 	
 cntrlcen.obj: cntrlcen.c 
 	wcc386 $(CCFLAGS) cntrlcen.c
-cockpit.obj: cockpit.asm
-	masm /i$INCLUDE cockpit.asm cockpit.obj
+#TODO: Add this back in?
+#cockpit.obj: cockpit.asm
+#	masm cockpit.asm
+#	masm /i$INCLUDE cockpit.asm cockpit.obj
 #cockpit.inc psmacros.inc types.inc
 
 coindev.obj: coindev.c coindev.h 
@@ -145,10 +149,13 @@ inferno.obj: inferno.c
 	wcc386 $(CCFLAGS) inferno.c
 info.obj: info.c
 	wcc386 $(CCFLAGS) info.c
-int3hand.obj: psmacros.inc types.inc
-	masm int3hand.asm int3hand.obj;
-ipx_esr.obj: psmacros.inc types.inc
-	masm ipx_esr.asm ipx_esr.obj;
+#TODO: Interesting that the below two had to be fixed...
+int3hand.obj: int3hand.asm
+	masm /i$INCLUDE int3hand.asm
+#	masm int3hand.asm
+ipx_esr.obj: ipx_esr.asm
+	masm /i$INCLUDE ipx_esr.asm
+#	masm ipx_esr.asm
 joydefs.obj: joydefs.c
 	wcc386 $(CCFLAGS) joydefs.c
 kbuild.obj: 
@@ -266,7 +273,7 @@ slew.obj:
 songs.obj: 
 	wcc386 $(CCFLAGS) songs.c
 soscodec.obj: soscodec.asm
-	masm soscodec.asm soscodec.obj;
+	masm soscodec.asm
 state.obj: 
 	wcc386 $(CCFLAGS) state.c
 switch.obj:
@@ -293,6 +300,7 @@ vclip.obj:
 	wcc386 $(CCFLAGS) vclip.c
 vfx.obj: 
 	wcc386 $(CCFLAGS) vfx.c
+#TODO: ???
 #vfxread.obj: 
 #	wcc386 $(CCFLAGS) vfxread.c
 victor.obj: 
@@ -304,3 +312,5 @@ weapon.obj:
 nocomlib.obj: nocomlib.c
 	wcc386 $(CCFLAGS) nocomlib.c
 
+clean:
+	erase $(CLEAN_TARGS)

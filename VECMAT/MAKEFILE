@@ -8,7 +8,6 @@
 #
 
 LIBDIR = ..\main
-#
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
@@ -22,18 +21,13 @@ LIBS = vecmat
 VECMAT_OBJS = vecmat.obj
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
-# What test programs to make
-TEST_PROGS = vectest 
-
-# What object files and libs for the test programs
-VECTEST_SRCS = vectest.c
-VECTEST_LIBS = vecmat.lib io.lib fix.lib
 vecmat.lib: $(VECMAT_OBJS)
-	wlib vecmat.lib $(VECMAT_OBJS)
-	copy *.lib $(LIBDIR)
-vecmat.obj: vecmat.inc vecmat.asm
-	masm vecmat.asm;
+	wlib /q vecmat.lib $(VECMAT_OBJS)
 
-vectest.obj: fix.h stdio.h types.h vecmat.h
+vecmat.obj: vecmat.inc vecmat.asm
+	masm vecmat.asm
+
+clean:
+	erase $(CLEAN_TARGS)

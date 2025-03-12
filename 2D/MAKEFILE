@@ -9,57 +9,34 @@
 
 LIBDIR = ..\main
 
-#
-
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
 # What to install, and where to install it
 INSTALL_TARGS = effect2d.h gr.h gr.lib grdef.h gr.inc palette.h ibitblt.h rle.h pcx.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj *.lib *.err
 
 # What libs to make
 LIBS = gr
 
-# What test programs to make
-#TEST_PROGS = testg testp vesatest
-PROGS = testg
-
 # What object files for the lib
 GR_OBJS = linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
 	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj  \
-	gpixel.obj palette.obj line.obj lbitblt.obj        \
+	gpixel.obj palette.obj line.obj lbitblt.obj \
 	scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
+#TODO: Why were the two below commented out?
 #effects.obj roller.obj 
 
-# What object files and libs for the test programs
-TESTG_SRCS = testg.c tmapbits.c
-TESTG_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
-
-#TESTP_OBJS = testp.obj
-#TESTP_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
-
-#VESATEST_OBJS = vesatest.obj
-#VESATEST_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
-
-gr.lib: linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
-	bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj  \
-	gpixel.obj palette.obj line.obj lbitblt.obj        \
-	scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
-
-	wlib gr.lib linear.obj vesa.obj modex.obj canvas.obj bitmap.obj gr.obj font.obj \
-		bitblt.obj scanline.obj pixel.obj poly.obj disc.obj rect.obj box.obj  \
-		gpixel.obj palette.obj line.obj lbitblt.obj        \
-		scale.obj scalea.obj circle.obj ibitblt.obj rle.obj pcx.obj
-	copy *.lib $(LIBDIR)
+gr.lib: $(GR_OBJS)
+	wlib /q gr.lib $(GR_OBJS)
 
 bitblt.obj: bitblt.c
 	wcc386 $(CCFLAGS) bitblt.c
 bitmap.obj: bitmap.c
-	wcc386 $(CCFLAGS) bitmap
+	wcc386 $(CCFLAGS) bitmap.c
 box.obj: box.c
-	wcc386 $(CCFLAGS) box
+	wcc386 $(CCFLAGS) box.c
 canvas.obj: canvas.c
 	wcc386 $(CCFLAGS) canvas.c
 circle.obj: circle.c
@@ -87,9 +64,10 @@ lbitblt.obj: lbitblt.asm
 line.obj: line.c
 	wcc386 $(CCFLAGS) line.c
 linear.obj: linear.asm
-	masm linear.asm linear.obj
+	masm linear.asm
 median.obj: median.c
 	wcc386 $(CCFLAGS) median.c
+#TODO: Check order between the two below...
 mspeed.obj: mspeed.c
 	wcc386 $(CCFLAGS) mspeed.c
 modex.obj: modex.asm
@@ -111,14 +89,13 @@ roller.obj: roller.c
 scale.obj: scale.c
 	wcc386 $(CCFLAGS) scale.c
 scalea.obj: scalea.asm
-	masm scalea.asm scalea.obj 
+	masm scalea.asm
 scanline.obj: scanline.c
 	wcc386 $(CCFLAGS) scanline.c
-testg.obj: testg.c
-	wcc386 $(CCFLAGS) testg.c
 vesa.obj: vesa.asm
 	masm vesa.asm
 vesalib.obj: vesalib.c
 	wcc386 $(CCFLAGS) vesalib.c
-vesatest.obj: vesatest.c
-	wcc386 $(CCFLAGS) vesatest.c
+
+clean:
+	erase $(CLEAN_TARGS)
