@@ -4,7 +4,8 @@
 # Makes all the executable by visiting subdirs and making there
 #
 
-CLEAN_TARGS = $(OBJDIR)\*.obj
+# What to clean
+CLEAN_TARGS = *.obj *.lib *.err
 
 PROGS = xcolor
 
@@ -18,3 +19,7 @@ xcolor.exe: xcolor.obj
 	wl386 xcolor.c 
 xcolor.obj: xcolor.c
 	wcc386 xcolor.c
+	
+.PHONY: clean
+clean:
+	@for %f in ($(CLEAN_TARGS)) do erase %f

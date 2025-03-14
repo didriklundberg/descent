@@ -15,4 +15,6 @@ PROGS = hogfile
 
 HOGFILE_SRCS = hogfile.c 
 
-
+.PHONY: clean
+clean:
+	@for %f in ($(CLEAN_TARGS)) do erase %f

@@ -29,5 +29,6 @@ fix.lib: $(FIX_OBJS)
 fix.obj: fix.inc fix.asm
 	masm fix.asm
 
+.PHONY: clean
 clean:
-  erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

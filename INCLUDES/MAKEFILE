@@ -29,3 +29,7 @@ TEST_LIBS = io.lib
 mactest.obj: psmacros.inc
 
 test.obj: mono.h
+
+.PHONY: clean
+clean:
+	@for %f in ($(CLEAN_TARGS)) do erase %f

@@ -36,4 +36,8 @@ iff15bpp.obj:
 
 testp.obj: 
 
-tga.obj: 
+tga.obj:
+
+.PHONY: clean
+clean:
+	@for %f in ($(CLEAN_TARGS)) do erase %f

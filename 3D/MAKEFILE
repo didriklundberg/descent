@@ -68,5 +68,6 @@ setup.obj: setup.asm
 upvecs.obj: upvecs.asm
 	masm upvecs.asm
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

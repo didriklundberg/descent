@@ -312,5 +312,6 @@ weapon.obj:
 nocomlib.obj: nocomlib.c
 	wcc386 $(CCFLAGS) nocomlib.c
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

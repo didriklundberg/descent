@@ -43,5 +43,6 @@ mouse.obj: mouse.c
 timer.obj: timer.asm
 	masm timer.asm
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

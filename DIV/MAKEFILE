@@ -29,5 +29,6 @@ div0.lib: $(DIV0_OBJS)
 div0.obj: div0.asm
 	masm div0.asm
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

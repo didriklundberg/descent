@@ -32,6 +32,7 @@ error.obj: error.c error.h
 parsarg.obj: parsarg.c parsarg.h
 	wcc386 $(CCFLAGS) parsarg.c
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f
 

@@ -22,5 +22,6 @@ cfile.lib: $(CFILE_OBJS)
 cfile.obj: cfile.h cfile.c
 	wcc386 $(CCFLAGS) cfile.c
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

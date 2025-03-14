@@ -97,5 +97,6 @@ vesa.obj: vesa.asm
 vesalib.obj: vesalib.c
 	wcc386 $(CCFLAGS) vesalib.c
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

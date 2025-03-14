@@ -29,5 +29,6 @@ vecmat.lib: $(VECMAT_OBJS)
 vecmat.obj: vecmat.inc vecmat.asm
 	masm vecmat.asm
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

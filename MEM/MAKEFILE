@@ -28,5 +28,6 @@ mem.lib: $(MEM_OBJS)
 mem.obj: mem.h mem.c
 	wcc386 $(CCFLAGS) mem.c
 
+.PHONY: clean
 clean:
-	erase $(CLEAN_TARGS)
+	@for %f in ($(CLEAN_TARGS)) do erase %f

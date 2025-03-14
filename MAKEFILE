@@ -5,17 +5,26 @@
 #
 
 # The only thing to make is the subdirs
-SUBSYSTEMS = misc includes fix cfile 2d bios iff div mem vecmat 3d texmap
+SUBDIRS = misc includes fix cfile 2d bios iff div mem vecmat 3d texmap ui main
 #sosdigi sosmidi
 
 # What to make in the subdirs if nothing specified
-SUBTARGETS = clean optimize no_mono no_debug linstall
+#SUBTARGETS = clean optimize no_mono no_debug linstall
 #SUBTARGETS = update linstall
 
 # When making clean here, delete libs
-CLEAN_TARGS = 
+#CLEAN_TARGS = 
 #lib\*.lib lib\*.h lib\*.inc
 
 #all Miner makefiles should include this
-%include $(INIT)\makefile.def
-
+#%include $(INIT)\makefile.def
+
+.PHONY: all clean
+
+all:
+	@echo Building all targets
+
+clean:
+	@echo Cleaning all subdirectories...
+	@for %d in ($(SUBDIRS)) do call clean.bat %d
+	@echo Clean complete.
